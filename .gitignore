@@ -1,5 +1,6 @@
 # Dataset
 dataset/
+dataset.zip
 
 # Trained models
 models/*.keras

@@ -59,7 +59,17 @@ export type NonFruitInspection = {
   message: string;
 };
 
+export type ClassificationResult = {
+  kind: "classification";
+  fruit_name: string;
+  predicted_class: string;
+  confidence: number;
+  model_scope: string;
+  source?: string;
+};
+
 export type InspectionResult =
   | SupportedInspection
   | UnsupportedInspection
-  | NonFruitInspection;
+  | NonFruitInspection
+  | ClassificationResult;

@@ -25,9 +25,28 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+EXPERIMENT_DIR = ROOT_DIR / "artifacts" / "experiment"
+
+
+def runtime_status():
+    from backend.classification_service import runtime_status as status
+    return status()
+
+
+def experiment_summary():
+    from backend.classification_service import experiment_summary as summary
+    return summary(EXPERIMENT_DIR)
+
+
+def classify_fruit_type(image):
+    from backend.classification_service import classify_fruit_type as classify
+    return classify(image, EXPERIMENT_DIR)
+
+
 HOST = "127.0.0.1"
 PORT = 8000
 MAX_UPLOAD_BYTES = 12 * 1024 * 1024
+MAX_IMAGE_PIXELS = 25_000_000
 SUPPORTED_MODEL_FRUITS = {"apple", "banana", "orange"}
 FAST_SUPPORTED_CONFIDENCE = float(os.getenv("PROOTYPIE_FAST_SUPPORTED_CONFIDENCE", "70"))
 _gemini_service = None
@@ -188,6 +207,12 @@ def local_recommendation(fruit_name: str, freshness_status: str | None) -> dict:
             "market_recommendation": "Market soon after harvest for best quality.",
         }
     status = freshness_status or "Unknown"
+    if freshness_status is None:
+        recommendation = {
+            **recommendation,
+            "shelf_life": "Freshness not assessed; storage duration is only a general reference.",
+            "advice": "Fruit type alone cannot determine freshness or food safety. Inspect smell, texture, damage, and mold before use.",
+        }
     if status_key == "rotten":
         return {
             **recommendation,
@@ -362,7 +387,7 @@ def quick_chat_reply(messages: list) -> str:
         topic = "ripeness"
 
     if fruit_name:
-        return _FRUIT_CHAT_KNOWLEDGE[fruit_name][topic]
+        return _FRUIT_CHAT_KNOWLEDGE[fruit_name].get(topic) or _FRUIT_CHAT_KNOWLEDGE[fruit_name]["benefits"]
 
     if topic == "storage":
         return "For most fruit, keep it cool, dry, and ventilated. Refrigerate ripe fruit, keep moisture low, and remove spoiled pieces quickly so they do not affect the rest."
@@ -394,6 +419,9 @@ def load_image(raw: bytes) -> Image.Image:
     """Decode uploaded image bytes as a detached PIL image."""
     try:
         image = Image.open(BytesIO(raw))
+        if image.width * image.height > MAX_IMAGE_PIXELS:
+            raise ValueError("Image dimensions are too large. Please use an image under 25 megapixels.")
+        image.load()
         return image.copy()
     except UnidentifiedImageError as exc:
         raise ValueError("The uploaded file is not a valid image.") from exc
@@ -475,7 +503,11 @@ class ProotyPieHandler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:  # noqa: N802 - stdlib hook name
         parsed = urlparse(self.path)
         if parsed.path == "/api/health":
-            self._json({"ok": True})
+            self._json(runtime_status())
+            return
+
+        if parsed.path == "/api/experiments":
+            self._json(experiment_summary())
             return
 
         if parsed.path == "/api/spotlight":
@@ -490,8 +522,8 @@ class ProotyPieHandler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:  # noqa: N802 - stdlib hook name
         parsed = urlparse(self.path)
         try:
-            if parsed.path == "/api/inspect":
-                self._handle_inspect()
+            if parsed.path in {"/api/inspect", "/api/classify"}:
+                self._handle_inspect(classification=parsed.path == "/api/classify")
                 return
             if parsed.path == "/api/chat":
                 self._handle_chat()
@@ -507,7 +539,7 @@ class ProotyPieHandler(BaseHTTPRequestHandler):
         except Exception as exc:
             self._json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
 
-    def _handle_inspect(self) -> None:
+    def _handle_inspect(self, classification: bool = False) -> None:
         content_length = int(self.headers.get("Content-Length", "0"))
         if content_length <= 0:
             raise ValueError("No upload received.")
@@ -529,7 +561,7 @@ class ProotyPieHandler(BaseHTTPRequestHandler):
 
         raw = field.file.read()
         image = load_image(raw)
-        self._json(run_inspection(image))
+        self._json(classify_fruit_type(image) if classification else run_inspection(image))
 
     def _handle_chat(self) -> None:
         content_length = int(self.headers.get("Content-Length", "0"))
@@ -574,8 +606,9 @@ def warm_prediction_model() -> None:
 
 def main() -> None:
     """Start the local API server."""
-    server = ThreadingHTTPServer((HOST, PORT), ProotyPieHandler)
-    print(f"ProotyPie API listening on http://{HOST}:{PORT}")
+    port = int(os.getenv("PORT", str(PORT)))
+    server = ThreadingHTTPServer((HOST, port), ProotyPieHandler)
+    print(f"ProotyPie API listening on http://{HOST}:{port}")
     threading.Thread(target=warm_prediction_model, daemon=True).start()
     server.serve_forever()
 

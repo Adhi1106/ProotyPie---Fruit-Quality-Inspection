@@ -1,0 +1,912 @@
+{
+  "page": {
+    "size": "A4",
+    "margin_mm": 18
+  },
+  "styles": [
+    {
+      "name": "Title Custom",
+      "font": "Arial",
+      "size": 18,
+      "bold": true
+    },
+    {
+      "name": "Heading Custom",
+      "font": "Arial",
+      "size": 13,
+      "bold": true
+    },
+    {
+      "name": "Body Custom",
+      "font": "Arial",
+      "size": 10.5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "ProotyPie Project Report",
+      "style": "Title Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "1. Title",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "ProotyPie: CNN Activation-Function Comparison for Fruit Image Classification with a Submission-Ready Web Interface",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "2. Abstract",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "This project delivers a submission-ready convolutional neural network (CNN) mini-project based on a documented subset of the public Fruits-360 dataset. The work compares four activation functions\u2014ReLU, Sigmoid, Tanh, and Leaky ReLU\u2014under three stochastic gradient descent (SGD) learning rates: 0.001, 0.01, and 0.1. Each configuration is trained and evaluated using accuracy, precision, recall, and macro F1-score. Training and validation loss and accuracy plots are generated for all 12 runs, and the final validation-selected model is evaluated once on a held-out official test split using a confusion matrix.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Alongside the experiment, the project includes a polished web interface and Python API so the trained classifier can be demonstrated interactively. The interface clearly separates fruit-type classification from freshness inspection to avoid unsupported claims. The resulting system is reproducible, test-backed, and documented for academic submission.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "3. Problem Statement",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Manual identification of fruit images is simple for humans in obvious cases, but a machine learning system must learn useful visual features and converge reliably under different optimization settings. The assignment requires a CNN image-classification system that investigates how activation functions and learning rates affect convergence and final performance.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "The practical objective of this project is therefore twofold:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "1. Build and compare CNN configurations on a public dataset.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "2. Present the trained model through a clean application interface suitable for project demonstration and submission.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "4. Objectives",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Build a CNN for fruit image classification using a public dataset.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Compare ReLU, Sigmoid, Tanh, and Leaky ReLU activation functions.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Study the effect of learning rates 0.001, 0.01, and 0.1 under SGD.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Evaluate performance using accuracy, precision, recall, and macro F1-score.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Visualize training and validation loss and accuracy.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Generate a confusion matrix for the final selected model.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Integrate the trained model into a working web application.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Document limitations honestly, especially the difference between fruit-type classification and freshness assessment.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "5. Dataset",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "5.1 Source",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Dataset: **Fruits-360**",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Repository: https://github.com/Horea94/Fruit-Images-Dataset",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 License reference: MIT License in the repository",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "5.2 Scope used in this submission",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "A documented subset was used so all required experiments could be completed reproducibly within the available compute budget.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Classes used:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Apple Braeburn",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Banana",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Orange",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Strawberry",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Image size used for training:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 48 \u00d7 48 \u00d7 3",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sampling policy:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 first lexicographically ordered official JPGs",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 100 Training images per class",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 40 official Test images per class",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Final split sizes:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Training: 320 images",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Validation: 80 images",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Held-out official Test: 160 images",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Data-integrity policy:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 SHA-256 hashes were computed across all used files",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 no overlap was allowed between train, validation, and held-out test samples",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "6. Methodology",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "6.1 Experimental design",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "The project tests 12 combinations:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 4 activation functions \u00d7 3 learning rates",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Activation functions:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 ReLU",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Sigmoid",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Tanh",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Leaky ReLU",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Learning rates:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 0.001",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 0.01",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 0.1",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Optimizer:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 SGD",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Epochs:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 6",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Batch size:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 16",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Selection rule:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 best validation macro F1-score",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "6.2 CNN architecture",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "A compact CNN was used to keep the comparison tractable and fair:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Conv2D(8, 3\u00d73)",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 chosen activation",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 MaxPooling2D",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Conv2D(16, 3\u00d73)",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 chosen activation",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 GlobalAveragePooling2D",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Dense(4, softmax)",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "This architecture was held constant across all runs. Only the activation function and learning rate changed.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "6.3 Evaluation metrics",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "For each run, the following were recorded:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 accuracy",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 precision_macro",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 recall_macro",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 f1_macro",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 final training loss",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 final validation loss",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 final training accuracy",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 final validation accuracy",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "The held-out test set was used exactly once after validation-based model selection.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "7. Experimental Results",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "7.1 Best configuration",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "The validation-selected winner was:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Activation: **Tanh**",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Learning rate: **0.1**",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Optimizer: **SGD**",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "7.2 Held-out test performance of the selected model",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Accuracy: **1.0**",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Precision (macro): **1.0**",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Recall (macro): **1.0**",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 F1-score (macro): **1.0**",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "7.3 Validation comparison summary",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Observed validation macro F1 patterns:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 ReLU: 0.10, 0.34, 0.65",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Sigmoid: 0.10, 0.10, 0.37",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Tanh: 0.10, 0.38, 1.00",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Leaky ReLU: 0.10, 0.29, 0.71",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Interpretation:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 The lowest learning rate, 0.001, performed poorly for all tested activations.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 A learning rate of 0.1 produced the strongest results for every activation function.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Tanh with learning rate 0.1 was the best overall configuration on the validation split.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "8. Figure Notes",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Figure 1 \u2014 Validation comparison plot",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "The validation-comparison bar chart shows macro F1 for each activation-function / learning-rate pair. A learning rate of 0.1 consistently outperformed the lower learning rates, and Tanh at 0.1 achieved the best score.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "File:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 `artifacts/experiment/validation_comparison.png`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Figure 2 \u2014 Confusion matrix",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "The held-out official test confusion matrix shows all 160 samples classified correctly: 40 Apple Braeburn, 40 Banana, 40 Orange, and 40 Strawberry. All counts lie on the main diagonal with no off-diagonal errors.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "File:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 `artifacts/experiment/test_confusion_matrix.png`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "9. Web Application Integration",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "To make the project demonstrable, the trained experiment model was integrated into the ProotyPie application.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.1 Added application features",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 responsive premium frontend dashboard",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 image upload and preview",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 runtime readiness banner from `/api/health`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 separate **Fruit classification lab** mode",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 JSON export and print-report support",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 `/api/classify` endpoint serving the trained local CNN",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 `/api/experiments` endpoint serving experiment metadata and results",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.2 Honest capability separation",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "The repository originally described a freshness workflow, but the required trained freshness model file was not present. Therefore, the final interface does not pretend that fruit-type classification is freshness detection.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Current verified state:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 fruit-type classification: **working**",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 original freshness inspection path: **not available in this snapshot**",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "This separation is important for academic correctness.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "10. Verification Performed",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "The following checks were run successfully:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Python API tests: `6 passed`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 frontend behavioral contract: passed",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 frontend production build: passed",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 experiment pipeline rerun: passed",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 API smoke checks:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "- `/api/health` returned real readiness values",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "- `/api/experiments` returned the experiment summary",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "- `/api/classify` returned a valid prediction from the trained model",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "11. Screenshots / Evidence to Attach",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Include these files in the submission package or appendix:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 `artifacts/experiment/validation_comparison.png`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 `artifacts/experiment/test_confusion_matrix.png`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 application home/demo screenshots captured during final presentation prep",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "Recommended live-demo screenshots:",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "1. dashboard home screen",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "2. fruit classification lab result screen",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "3. model status / readiness area",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "4. validation comparison plot",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "5. confusion matrix",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "12. Limitations",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 The experiment uses a documented subset of Fruits-360, not the full dataset.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Perfect accuracy on the held-out subset does not guarantee the same performance on real-world or open-set images.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 The trained submission model performs **fruit-type classification only**.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 It does not assess freshness, spoilage, or food safety.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Gemini-powered features require a valid API key and were not needed for the core assignment experiment.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 The original repository freshness model file was missing, so that path remains unavailable.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "13. Conclusion",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "This project satisfies the assignment requirements by delivering a complete CNN comparison study on a public image dataset, including activation-function and learning-rate analysis, evaluation metrics, training curves, and a confusion matrix. Among the tested configurations, Tanh with SGD at learning rate 0.1 produced the best validation performance and achieved perfect performance on the held-out documented test subset.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "The project was also extended into a usable application interface so the trained classifier can be demonstrated clearly. Most importantly, the final submission preserves scope honesty by separating fruit-type classification from unsupported freshness claims.",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "14. File References",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Experiment script: `experiments/run_fruits360_experiment.py`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Experiment tests: `experiments/test_cnn_experiments.py`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Notebook: `notebooks/Fruits360_CNN_Experiments.ipynb`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Summary: `artifacts/experiment/summary.json`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Model: `artifacts/experiment/best_model.keras`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Frontend: `frontend/app/page.tsx`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 API server: `api/server.py`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "\u2022 Classification service: `backend/classification_service.py`",
+      "style": "Body Custom"
+    },
+    {
+      "type": "paragraph",
+      "text": "validation_comparison.png",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "image",
+      "path": "/home/hermes/workspace/projects/prootypie/artifacts/experiment/validation_comparison.png",
+      "width_mm": 160
+    },
+    {
+      "type": "paragraph",
+      "text": "test_confusion_matrix.png",
+      "style": "Heading Custom"
+    },
+    {
+      "type": "image",
+      "path": "/home/hermes/workspace/projects/prootypie/artifacts/experiment/test_confusion_matrix.png",
+      "width_mm": 160
+    }
+  ]
+}

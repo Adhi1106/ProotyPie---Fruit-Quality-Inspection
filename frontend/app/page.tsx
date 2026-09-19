@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { ChangeEvent, DragEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { fetchStorageRecommendation, getSpotlightFact, inspectImage, sendChat } from "../lib/api";
+import { classifyImage, fetchStorageRecommendation, getHealth, getSpotlightFact, inspectImage, sendChat } from "../lib/api";
 import type { ChatMessage, ChatSession, InspectionResult, Recommendation } from "../types";
 
 const spotlightFruits = [
@@ -169,7 +169,7 @@ function Sidebar({
         <section className="glass-card spotlight-card mt-auto p-4">
           <p className="text-[14px] font-semibold uppercase tracking-[0.05em] text-secondary">Fruit Spotlight</p>
           <h2 className="mt-6 text-[22px] font-semibold leading-7 text-primary">{fruit.name}</h2>
-          <p className="mt-3 text-[15px] leading-6 text-on-surface-variant">{spotlightFact || fruit.fallback}</p>
+          <p className="mt-3 max-w-[280px] text-[15px] leading-6 text-on-surface-variant">{spotlightFact || fruit.fallback}</p>
           <button
             className="mt-5 inline-flex text-[15px] font-semibold text-secondary transition hover:translate-x-0.5 hover:text-primary"
             onClick={onNext}
@@ -182,12 +182,19 @@ function Sidebar({
   );
 }
 
-function Header() {
+function Header({ health }: { health: { ok?: boolean; model_present?: boolean; model_loaded?: boolean; gemini_configured?: boolean; inspection_ready?: boolean } | null }) {
+  const inspectionReady = Boolean(health?.inspection_ready && (health.model_loaded ?? health.model_present));
+  const label = health === null ? "Checking model status" : inspectionReady ? "Inspection model ready" : "Inspection model unavailable";
   return (
-    <header className="flex w-full items-center px-margin-mobile py-6 md:px-margin-desktop">
-      <h1 className="text-[24px] font-bold leading-8 tracking-[-0.01em] text-primary md:text-[32px] md:leading-10">
-        Check Before Consuming
-      </h1>
+    <header className="flex w-full flex-wrap items-center justify-between gap-4 px-margin-mobile py-6 md:px-margin-desktop">
+      <div>
+        <p className="text-sm font-semibold text-secondary">Visual produce inspection</p>
+        <h1 className="text-[24px] font-bold leading-8 tracking-[-0.01em] text-primary md:text-[32px] md:leading-10">Check the image, then decide</h1>
+      </div>
+      <div className="model-status" aria-live="polite">
+        <span className={`status-dot ${inspectionReady ? "status-ready" : "status-unavailable"}`} />
+        <div><strong>Model status</strong><span>{label}</span></div>
+      </div>
     </header>
   );
 }
@@ -196,12 +203,14 @@ function UploadDropzone({
   file,
   previewUrl,
   isAnalyzing,
+  mode,
   onFile,
   onInspect
 }: {
   file: File | null;
   previewUrl: string | null;
   isAnalyzing: boolean;
+  mode: "inspection" | "classification";
   onFile: (file: File) => void;
   onInspect: () => void;
 }) {
@@ -210,6 +219,10 @@ function UploadDropzone({
   function chooseFile(event: ChangeEvent<HTMLInputElement>) {
     const nextFile = event.target.files?.[0];
     if (nextFile) onFile(nextFile);
+  }
+
+  function activateDropzone(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "Enter" || event.key === " ") { event.preventDefault(); inputRef.current?.click(); }
   }
 
   function handleDrop(event: DragEvent<HTMLDivElement>) {
@@ -226,6 +239,7 @@ function UploadDropzone({
         tabIndex={0}
         className="flex w-full flex-1 cursor-pointer flex-col items-center justify-center rounded-xl"
         onClick={() => inputRef.current?.click()}
+        onKeyDown={activateDropzone}
         onDragOver={(event) => event.preventDefault()}
         onDrop={handleDrop}
       >
@@ -252,7 +266,7 @@ function UploadDropzone({
             </button>
           </div>
           <button className="primary-button mt-4 w-full" onClick={onInspect} disabled={isAnalyzing}>
-            {isAnalyzing ? "Analyzing..." : "Run AI Inspection"}
+            {isAnalyzing ? "Analyzing..." : mode === "classification" ? "Classify fruit type" : "Run freshness inspection"}
           </button>
         </div>
       ) : null}
@@ -267,6 +281,11 @@ function PredictionCard({
   result: InspectionResult;
   onFollowUpQuestion?: (question: string) => void;
 }) {
+  if (result.kind === "classification") {
+    const confidence = Math.max(0, Math.min(100, result.confidence));
+    return <section className="glass-card animate-panel-in p-glass-padding"><p className="text-[14px] font-semibold text-secondary">Fruit classification lab</p><h2 className="mt-2 text-[28px] font-semibold text-primary">{result.fruit_name}</h2><p className="mt-3 text-[15px] leading-6 text-on-surface-variant">{result.model_scope}</p><div className="mt-6"><MetricBar label="Model confidence" value={`${confidence.toFixed(0)}%`} percent={confidence} /></div><p className="mt-4 text-sm leading-5 text-on-surface-variant">This experiment identifies a fruit type. It does not assess freshness, spoilage, or food safety.</p></section>;
+  }
+
   if (result.kind === "non_fruit") {
     return (
       <section className="glass-card p-glass-padding">
@@ -325,7 +344,8 @@ function PredictionCard({
       </div>
 
       <div className="mt-8 space-y-5">
-        <MetricBar label="Confidence" value={`${confidence.toFixed(0)}%`} percent={confidence} />
+        <MetricBar label="Model confidence" value={`${confidence.toFixed(0)}%`} percent={confidence} />
+        <p className="text-sm leading-5 text-on-surface-variant">Confidence reflects the classifier&apos;s certainty only; it does not establish freshness, safety, or suitability to eat.</p>
         <MetricBar label="Surface Integrity" value={isFresh ? "High" : "Low"} percent={isFresh ? 85 : 38} secondary />
       </div>
 
@@ -614,6 +634,9 @@ function TypingIndicator() {
 }
 
 export default function DashboardPage() {
+  const [mode, setMode] = useState<"inspection" | "classification">("classification");
+  const [health, setHealth] = useState<{ ok?: boolean; model_present?: boolean; model_loaded?: boolean; gemini_configured?: boolean; inspection_ready?: boolean; classification_ready?: boolean } | null>(null);
+  const [healthError, setHealthError] = useState("");
   const [spotlightIndex, setSpotlightIndex] = useState(0);
   const [spotlightFact, setSpotlightFact] = useState(spotlightFruits[0].fallback);
   const [file, setFile] = useState<File | null>(null);
@@ -638,6 +661,12 @@ export default function DashboardPage() {
       freshnessStatus: result.freshness_status
     };
   }, [result]);
+
+  useEffect(() => {
+    let cancelled = false;
+    getHealth().then((status) => { if (!cancelled) setHealth(status); }).catch(() => { if (!cancelled) setHealthError("Backend status could not be reached."); });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("prootypie-chat");
@@ -729,7 +758,7 @@ export default function DashboardPage() {
     setResult(null);
     setIsAnalyzing(true);
     try {
-      const nextResult = await inspectImage(file);
+      const nextResult = mode === "classification" ? await classifyImage(file) : await inspectImage(file);
       setResult(nextResult);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Inspection failed. Please try again.");
@@ -808,6 +837,14 @@ export default function DashboardPage() {
     void handleSend(question);
   }
 
+  function downloadReport() {
+    if (!result) return;
+    const payload = { exported_at: new Date().toISOString(), inspection: result, model_status: health };
+    const href = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = href; link.download = "prootypie-inspection.json"; link.click(); URL.revokeObjectURL(href);
+  }
+
   return (
     <AppShell>
       <Sidebar
@@ -816,13 +853,17 @@ export default function DashboardPage() {
         onNext={() => setSpotlightIndex((current) => (current + 1) % spotlightFruits.length)}
       />
       <div className="min-h-screen md:pl-72">
-        <Header />
+        <Header health={health} />
         <div className="mx-auto w-full max-w-[1440px] px-margin-mobile pb-margin-desktop md:px-margin-desktop">
+          <section className="mb-6 rounded-2xl border border-primary-container/15 bg-white/55 p-4 text-sm text-on-surface-variant">
+            <strong className="text-primary">How this works.</strong> Image classification is a model signal, not a safety clearance. {healthError || (health?.inspection_ready ? "Local TensorFlow inspection is available." : "Local TensorFlow inspection is not ready; no inspection result will be invented.")} {health?.gemini_configured ? " Gemini can provide optional storage guidance." : " Storage guidance and chat use local reference responses when Gemini is unavailable."}
+          </section>
+          <div className="mode-tabs" role="group" aria-label="Analysis mode"><button className={mode === "classification" ? "mode-active" : ""} onClick={() => { setMode("classification"); setResult(null); }}>Fruit classification lab</button><button className={mode === "inspection" ? "mode-active" : ""} onClick={() => { setMode("inspection"); setResult(null); }}>Freshness inspection</button></div>
           <div className={recommendation ? "grid gap-gutter lg:grid-cols-12" : "max-w-[430px]"}>
             <div className={recommendation ? "flex flex-col gap-gutter lg:col-span-5" : "flex flex-col gap-gutter"}>
-              <UploadDropzone file={file} previewUrl={previewUrl} isAnalyzing={isAnalyzing} onFile={handleFile} onInspect={handleInspect} />
+              <UploadDropzone file={file} previewUrl={previewUrl} isAnalyzing={isAnalyzing} mode={mode} onFile={handleFile} onInspect={handleInspect} />
               {isAnalyzing ? <AnalysisSkeleton /> : null}
-              {result ? <PredictionCard result={result} onFollowUpQuestion={handleFollowUpQuestion} /> : null}
+              {result ? <><PredictionCard result={result} onFollowUpQuestion={handleFollowUpQuestion} /><div className="report-actions"><button className="secondary-button" onClick={downloadReport}>Download JSON</button><button className="secondary-button" onClick={() => window.print()}>Print report</button></div></> : null}
               {error ? (
                 <div className="glass-card p-5 text-[16px] leading-6 text-primary">
                   <strong>Inspection failed:</strong> {error}

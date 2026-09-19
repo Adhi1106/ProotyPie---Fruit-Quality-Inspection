@@ -1,0 +1,281 @@
+{
+  "scope": {
+    "experiment_type": "fruit-type classification, not freshness/rottenness classification",
+    "dataset_identity": "Fruits-360 official GitHub repository Horea94/Fruit-Images-Dataset (master)",
+    "repository_url": "https://github.com/Horea94/Fruit-Images-Dataset",
+    "license_url": "https://raw.githubusercontent.com/Horea94/Fruit-Images-Dataset/master/LICENSE",
+    "license": "MIT License (repository LICENSE)",
+    "classes": [
+      "Apple Braeburn",
+      "Banana",
+      "Orange",
+      "Strawberry"
+    ],
+    "image_shape": [
+      48,
+      48,
+      3
+    ],
+    "training_samples": 320,
+    "validation_samples": 80,
+    "held_out_official_test_samples": 160,
+    "sampling": "first lexicographically ordered official JPGs: 100 Training and 40 Test per class",
+    "deduplication": "SHA-256 checked across train/validation/official Test; no overlap",
+    "seed": 20260919,
+    "optimizer": "SGD",
+    "epochs": 6
+  },
+  "best_config": {
+    "activation": "tanh",
+    "learning_rate": 0.1,
+    "selection_metric": "validation macro F1",
+    "model_path": "best_model.keras",
+    "class_names_path": "class_names.json",
+    "input_shape": [
+      null,
+      48,
+      48,
+      3
+    ]
+  },
+  "test_metrics": {
+    "accuracy": 1.0,
+    "precision_macro": 1.0,
+    "recall_macro": 1.0,
+    "f1_macro": 1.0
+  },
+  "experiments": [
+    {
+      "activation": "relu",
+      "learning_rate": 0.001,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 0.25,
+        "precision_macro": 0.0625,
+        "recall_macro": 0.25,
+        "f1_macro": 0.1
+      },
+      "final_train_loss": 1.3869707584381104,
+      "final_validation_loss": 1.3865845203399658,
+      "final_train_accuracy": 0.25,
+      "final_validation_accuracy": 0.25,
+      "plots": {
+        "loss": "relu_lr0p001_loss.png",
+        "accuracy": "relu_lr0p001_accuracy.png"
+      }
+    },
+    {
+      "activation": "relu",
+      "learning_rate": 0.01,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 0.45,
+        "precision_macro": 0.328125,
+        "recall_macro": 0.45,
+        "f1_macro": 0.3412698412698413
+      },
+      "final_train_loss": 1.3802545070648193,
+      "final_validation_loss": 1.3794538974761963,
+      "final_train_accuracy": 0.5,
+      "final_validation_accuracy": 0.44999998807907104,
+      "plots": {
+        "loss": "relu_lr0p01_loss.png",
+        "accuracy": "relu_lr0p01_accuracy.png"
+      }
+    },
+    {
+      "activation": "relu",
+      "learning_rate": 0.1,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 0.75,
+        "precision_macro": 0.5928571428571429,
+        "recall_macro": 0.75,
+        "f1_macro": 0.654040404040404
+      },
+      "final_train_loss": 0.9415556788444519,
+      "final_validation_loss": 0.7360801696777344,
+      "final_train_accuracy": 0.6499999761581421,
+      "final_validation_accuracy": 0.75,
+      "plots": {
+        "loss": "relu_lr0p1_loss.png",
+        "accuracy": "relu_lr0p1_accuracy.png"
+      }
+    },
+    {
+      "activation": "sigmoid",
+      "learning_rate": 0.001,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 0.25,
+        "precision_macro": 0.0625,
+        "recall_macro": 0.25,
+        "f1_macro": 0.1
+      },
+      "final_train_loss": 1.4276087284088135,
+      "final_validation_loss": 1.425903558731079,
+      "final_train_accuracy": 0.25,
+      "final_validation_accuracy": 0.25,
+      "plots": {
+        "loss": "sigmoid_lr0p001_loss.png",
+        "accuracy": "sigmoid_lr0p001_accuracy.png"
+      }
+    },
+    {
+      "activation": "sigmoid",
+      "learning_rate": 0.01,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 0.25,
+        "precision_macro": 0.0625,
+        "recall_macro": 0.25,
+        "f1_macro": 0.1
+      },
+      "final_train_loss": 1.3870480060577393,
+      "final_validation_loss": 1.3855060338974,
+      "final_train_accuracy": 0.25,
+      "final_validation_accuracy": 0.25,
+      "plots": {
+        "loss": "sigmoid_lr0p01_loss.png",
+        "accuracy": "sigmoid_lr0p01_accuracy.png"
+      }
+    },
+    {
+      "activation": "sigmoid",
+      "learning_rate": 0.1,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 0.4875,
+        "precision_macro": 0.3319672131147541,
+        "recall_macro": 0.4875,
+        "f1_macro": 0.3670465337132004
+      },
+      "final_train_loss": 1.3863561153411865,
+      "final_validation_loss": 1.377750039100647,
+      "final_train_accuracy": 0.23125000298023224,
+      "final_validation_accuracy": 0.48750001192092896,
+      "plots": {
+        "loss": "sigmoid_lr0p1_loss.png",
+        "accuracy": "sigmoid_lr0p1_accuracy.png"
+      }
+    },
+    {
+      "activation": "tanh",
+      "learning_rate": 0.001,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 0.25,
+        "precision_macro": 0.0625,
+        "recall_macro": 0.25,
+        "f1_macro": 0.1
+      },
+      "final_train_loss": 1.373537302017212,
+      "final_validation_loss": 1.3734527826309204,
+      "final_train_accuracy": 0.25,
+      "final_validation_accuracy": 0.25,
+      "plots": {
+        "loss": "tanh_lr0p001_loss.png",
+        "accuracy": "tanh_lr0p001_accuracy.png"
+      }
+    },
+    {
+      "activation": "tanh",
+      "learning_rate": 0.01,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 0.5,
+        "precision_macro": 0.3347457627118644,
+        "recall_macro": 0.5,
+        "f1_macro": 0.37658227848101267
+      },
+      "final_train_loss": 1.3077173233032227,
+      "final_validation_loss": 1.2994486093521118,
+      "final_train_accuracy": 0.43437498807907104,
+      "final_validation_accuracy": 0.5,
+      "plots": {
+        "loss": "tanh_lr0p01_loss.png",
+        "accuracy": "tanh_lr0p01_accuracy.png"
+      }
+    },
+    {
+      "activation": "tanh",
+      "learning_rate": 0.1,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 1.0,
+        "precision_macro": 1.0,
+        "recall_macro": 1.0,
+        "f1_macro": 1.0
+      },
+      "final_train_loss": 0.46810397505760193,
+      "final_validation_loss": 0.44755858182907104,
+      "final_train_accuracy": 0.9937499761581421,
+      "final_validation_accuracy": 1.0,
+      "plots": {
+        "loss": "tanh_lr0p1_loss.png",
+        "accuracy": "tanh_lr0p1_accuracy.png"
+      }
+    },
+    {
+      "activation": "leaky_relu",
+      "learning_rate": 0.001,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 0.25,
+        "precision_macro": 0.0625,
+        "recall_macro": 0.25,
+        "f1_macro": 0.1
+      },
+      "final_train_loss": 1.385758638381958,
+      "final_validation_loss": 1.3854268789291382,
+      "final_train_accuracy": 0.25,
+      "final_validation_accuracy": 0.25,
+      "plots": {
+        "loss": "leaky_relu_lr0p001_loss.png",
+        "accuracy": "leaky_relu_lr0p001_accuracy.png"
+      }
+    },
+    {
+      "activation": "leaky_relu",
+      "learning_rate": 0.01,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 0.3875,
+        "precision_macro": 0.322463768115942,
+        "recall_macro": 0.3875,
+        "f1_macro": 0.28977890540050744
+      },
+      "final_train_loss": 1.3775051832199097,
+      "final_validation_loss": 1.3767997026443481,
+      "final_train_accuracy": 0.48124998807907104,
+      "final_validation_accuracy": 0.38749998807907104,
+      "plots": {
+        "loss": "leaky_relu_lr0p01_loss.png",
+        "accuracy": "leaky_relu_lr0p01_accuracy.png"
+      }
+    },
+    {
+      "activation": "leaky_relu",
+      "learning_rate": 0.1,
+      "epochs": 6,
+      "validation_metrics": {
+        "accuracy": 0.775,
+        "precision_macro": 0.8515151515151516,
+        "recall_macro": 0.775,
+        "f1_macro": 0.7063560129597866
+      },
+      "final_train_loss": 0.8369205594062805,
+      "final_validation_loss": 0.6307588815689087,
+      "final_train_accuracy": 0.612500011920929,
+      "final_validation_accuracy": 0.7749999761581421,
+      "plots": {
+        "loss": "leaky_relu_lr0p1_loss.png",
+        "accuracy": "leaky_relu_lr0p1_accuracy.png"
+      }
+    }
+  ],
+  "plots": {
+    "validation_comparison": "validation_comparison.png",
+    "test_confusion_matrix": "test_confusion_matrix.png"
+  }
+}

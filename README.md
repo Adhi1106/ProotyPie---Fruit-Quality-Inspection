@@ -1,5 +1,13 @@
 # ProotyPie
 
+## Final 131-class submission
+
+**Use [the expanded report](reports/expanded/Fruits360_CNN_Report.pdf) and [executed notebook](notebooks/Fruits360_Expanded_Experiments.ipynb) for submission.** The four-class material below is the earlier pilot, not the final experiment.
+
+The completed expanded run used the full pinned single-fruit snapshot (131 classes): 54,163 train / 13,526 validation / 22,688 test images after excluding three exact duplicates. Twelve activation/learning-rate configurations were attempted for eight epochs. Leaky ReLU at 0.1 diverged and is reported as unavailable, not a valid score. Selected Tanh/SGD0.1 achieved 93.23% test accuracy and 92.74% macro F1. Results were independently recomputed from saved predictions; 18 tests passed. See [submission guide](reports/expanded/SUBMISSION_README.md) and [reproduction instructions](experiments/EXPANDED_README.md).
+
+## Earlier four-class pilot and application
+
 Submission-ready fruit inspection coursework project with two clearly separated capabilities:
 
 1. **Original freshness inspection flow** for Apple, Banana, and Orange only.

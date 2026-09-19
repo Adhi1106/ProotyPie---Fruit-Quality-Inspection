@@ -1,0 +1,21 @@
+{
+  "verified": true,
+  "configurations": 12,
+  "classes": 131,
+  "split_counts": {
+    "train": 54163,
+    "validation": 13526,
+    "test": 22688
+  },
+  "test_metrics_recomputed": {
+    "accuracy": 0.9323430888575458,
+    "precision_macro": 0.9405931076963597,
+    "recall_macro": 0.9280795037870013,
+    "f1_macro": 0.9274328868436194
+  },
+  "best_config": {
+    "activation": "tanh",
+    "learning_rate": 0.1,
+    "selection_metric": "validation macro F1; accuracy tie-break; saved train-only checkpoint, no refit"
+  }
+}

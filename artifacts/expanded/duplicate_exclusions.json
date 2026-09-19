@@ -1,0 +1,14 @@
+[
+  {
+    "path": "Training/Avocado ripe/r_7_100.jpg",
+    "duplicate_of": "Training/Avocado ripe/r_100.jpg"
+  },
+  {
+    "path": "Training/Cherry Wax Red/1_100.jpg",
+    "duplicate_of": "Training/Cherry Wax Red/0_100.jpg"
+  },
+  {
+    "path": "Training/Pear Forelle/r_227_100.jpg",
+    "duplicate_of": "Training/Pear Forelle/r_226_100.jpg"
+  }
+]

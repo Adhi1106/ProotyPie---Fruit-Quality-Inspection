@@ -1,0 +1,1 @@
+Illustrated report revision: actual browser upload/classify passed for Banana, Orange, Strawberry; JSON export and mobile overflow checked. Frontend proxy fixed from 8017 to 8000. Production build passed and 13 Python tests passed. 12-page A4 PDF and editable DOCX generated with screenshots and comparison plots. Original freshness model remains absent. No full-dataset claims.

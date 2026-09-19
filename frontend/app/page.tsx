@@ -163,7 +163,7 @@ function Sidebar({
       <div className="flex h-full flex-col p-8">
         <div>
           <h1 className="text-[28px] font-bold leading-none tracking-[-0.02em] text-primary">ProotyPie</h1>
-          <p className="mt-3 text-[16px] text-secondary">AI Freshness Guard</p>
+          <p className="mt-3 text-[16px] text-secondary">Fruit classification studio</p>
         </div>
 
         <section className="glass-card spotlight-card mt-auto p-4">
@@ -182,14 +182,14 @@ function Sidebar({
   );
 }
 
-function Header({ health }: { health: { ok?: boolean; model_present?: boolean; model_loaded?: boolean; gemini_configured?: boolean; inspection_ready?: boolean } | null }) {
-  const inspectionReady = Boolean(health?.inspection_ready && (health.model_loaded ?? health.model_present));
-  const label = health === null ? "Checking model status" : inspectionReady ? "Inspection model ready" : "Inspection model unavailable";
+function Header({ health }: { health: { ok?: boolean; model_present?: boolean; model_loaded?: boolean; gemini_configured?: boolean; inspection_ready?: boolean; classification_ready?: boolean } | null }) {
+  const inspectionReady = Boolean(health?.classification_ready);
+  const label = health === null ? "Checking model status" : inspectionReady ? "Fruit classifier ready" : "Fruit classifier unavailable";
   return (
     <header className="flex w-full flex-wrap items-center justify-between gap-4 px-margin-mobile py-6 md:px-margin-desktop">
       <div>
-        <p className="text-sm font-semibold text-secondary">Visual produce inspection</p>
-        <h1 className="text-[24px] font-bold leading-8 tracking-[-0.01em] text-primary md:text-[32px] md:leading-10">Check the image, then decide</h1>
+        <p className="text-sm font-semibold text-secondary">Fruits-360 • CNN experiment</p>
+        <h1 className="text-[24px] font-bold leading-8 tracking-[-0.01em] text-primary md:text-[32px] md:leading-10">A closer look at fruit.</h1>
       </div>
       <div className="model-status" aria-live="polite">
         <span className={`status-dot ${inspectionReady ? "status-ready" : "status-unavailable"}`} />
@@ -856,7 +856,7 @@ export default function DashboardPage() {
         <Header health={health} />
         <div className="mx-auto w-full max-w-[1440px] px-margin-mobile pb-margin-desktop md:px-margin-desktop">
           <section className="mb-6 rounded-2xl border border-primary-container/15 bg-white/55 p-4 text-sm text-on-surface-variant">
-            <strong className="text-primary">How this works.</strong> Image classification is a model signal, not a safety clearance. {healthError || (health?.inspection_ready ? "Local TensorFlow inspection is available." : "Local TensorFlow inspection is not ready; no inspection result will be invented.")} {health?.gemini_configured ? " Gemini can provide optional storage guidance." : " Storage guidance and chat use local reference responses when Gemini is unavailable."}
+            <strong className="text-primary">How this works.</strong> Image classification is a model signal, not a safety clearance. {healthError || (health?.inspection_ready ? "Local TensorFlow inspection is available." : "The fruit-type classifier is available. The separate freshness model is not installed.")} {health?.gemini_configured ? " Gemini can provide optional storage guidance." : " Storage guidance and chat use local reference responses when Gemini is unavailable."}
           </section>
           <div className="mode-tabs" role="group" aria-label="Analysis mode"><button className={mode === "classification" ? "mode-active" : ""} onClick={() => { setMode("classification"); setResult(null); }}>Fruit classification lab</button><button className={mode === "inspection" ? "mode-active" : ""} onClick={() => { setMode("inspection"); setResult(null); }}>Freshness inspection</button></div>
           <div className={recommendation ? "grid gap-gutter lg:grid-cols-12" : "max-w-[430px]"}>

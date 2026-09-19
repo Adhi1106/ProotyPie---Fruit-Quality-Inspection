@@ -1,0 +1,8 @@
+tensorflow-cpu==2.21.0
+numpy
+pillow
+python-dotenv
+google-genai
+matplotlib
+scikit-learn
+pytest

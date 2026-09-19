@@ -1,0 +1,33 @@
+{
+  "exported_at": "2026-09-19T16:34:47.241Z",
+  "inspection": {
+    "kind": "classification",
+    "fruit_name": "Strawberry",
+    "predicted_class": "Strawberry",
+    "confidence": 54.71806335449219,
+    "raw_vector": [
+      0.29489895701408386,
+      0.1417497992515564,
+      0.016170619055628777,
+      0.5471806526184082
+    ],
+    "classes": [
+      "Apple Braeburn",
+      "Banana",
+      "Orange",
+      "Strawberry"
+    ],
+    "source": "local_cnn",
+    "model_scope": "Fruits-360 subset fruit-type classification. Closed-set model: it cannot reject unknown objects or assess freshness/food safety."
+  },
+  "model_status": {
+    "ok": true,
+    "model_present": false,
+    "gemini_configured": false,
+    "inspection_ready": false,
+    "classification_ready": true,
+    "model_loaded": true,
+    "classification_scope": "Fruits-360 subset fruit-type classification; not freshness or food safety.",
+    "freshness_scope": "Original six-class model missing"
+  }
+}

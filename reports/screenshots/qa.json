@@ -1,0 +1,78 @@
+{
+  "results": [
+    {
+      "input": "Banana",
+      "file": "100_100.jpg",
+      "response": {
+        "kind": "classification",
+        "fruit_name": "Banana",
+        "predicted_class": "Banana",
+        "confidence": 93.1165542602539,
+        "raw_vector": [
+          0.0013344684848561883,
+          0.9311655759811401,
+          0.00047666646423749626,
+          0.06702329963445663
+        ],
+        "classes": [
+          "Apple Braeburn",
+          "Banana",
+          "Orange",
+          "Strawberry"
+        ],
+        "source": "local_cnn",
+        "model_scope": "Fruits-360 subset fruit-type classification. Closed-set model: it cannot reject unknown objects or assess freshness/food safety."
+      }
+    },
+    {
+      "input": "Orange",
+      "file": "30_100.jpg",
+      "response": {
+        "kind": "classification",
+        "fruit_name": "Orange",
+        "predicted_class": "Orange",
+        "confidence": 82.47810363769531,
+        "raw_vector": [
+          0.1180727407336235,
+          0.008250158280134201,
+          0.824781060218811,
+          0.04889595881104469
+        ],
+        "classes": [
+          "Apple Braeburn",
+          "Banana",
+          "Orange",
+          "Strawberry"
+        ],
+        "source": "local_cnn",
+        "model_scope": "Fruits-360 subset fruit-type classification. Closed-set model: it cannot reject unknown objects or assess freshness/food safety."
+      }
+    },
+    {
+      "input": "Strawberry",
+      "file": "321_100.jpg",
+      "response": {
+        "kind": "classification",
+        "fruit_name": "Strawberry",
+        "predicted_class": "Strawberry",
+        "confidence": 54.71806335449219,
+        "raw_vector": [
+          0.29489895701408386,
+          0.1417497992515564,
+          0.016170619055628777,
+          0.5471806526184082
+        ],
+        "classes": [
+          "Apple Braeburn",
+          "Banana",
+          "Orange",
+          "Strawberry"
+        ],
+        "source": "local_cnn",
+        "model_scope": "Fruits-360 subset fruit-type classification. Closed-set model: it cannot reject unknown objects or assess freshness/food safety."
+      }
+    }
+  ],
+  "json_export": true,
+  "mobile_overflow": false
+}

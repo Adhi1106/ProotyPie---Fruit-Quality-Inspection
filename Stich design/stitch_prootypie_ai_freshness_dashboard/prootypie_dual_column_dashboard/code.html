@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ProotyPie - AI Freshness Guard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "on-error": "#ffffff",
+                  "surface-variant": "#e9e0e4",
+                  "inverse-surface": "#332f32",
+                  "surface-container-high": "#eee6ea",
+                  "error": "#ba1a1a",
+                  "surface-bright": "#fff7fa",
+                  "on-tertiary": "#ffffff",
+                  "on-secondary-fixed": "#3a0526",
+                  "outline-variant": "#d0c3cc",
+                  "inverse-on-surface": "#f7eef3",
+                  "secondary-fixed": "#ffd8e8",
+                  "on-error-container": "#93000a",
+                  "on-background": "#1e1a1e",
+                  "on-secondary-container": "#7a3b5d",
+                  "on-primary-fixed-variant": "#5e3a62",
+                  "surface-container-highest": "#e9e0e4",
+                  "secondary-container": "#fdacd3",
+                  "on-surface-variant": "#4d444c",
+                  "primary-container": "#502d55",
+                  "error-container": "#ffdad6",
+                  "secondary": "#8a496b",
+                  "on-primary": "#ffffff",
+                  "primary-fixed-dim": "#e6b7e8",
+                  "inverse-primary": "#e6b7e8",
+                  "surface-tint": "#77517b",
+                  "outline": "#7e747d",
+                  "on-surface": "#1e1a1e",
+                  "surface": "#fff7fa",
+                  "tertiary-fixed": "#f9dec3",
+                  "surface-container-low": "#faf1f5",
+                  "surface-container": "#f4ecf0",
+                  "primary-fixed": "#ffd6ff",
+                  "on-tertiary-fixed-variant": "#554430",
+                  "on-primary-container": "#c296c5",
+                  "surface-container-lowest": "#ffffff",
+                  "primary": "#38173e",
+                  "secondary-fixed-dim": "#ffafd5",
+                  "tertiary-container": "#483724",
+                  "tertiary": "#302210",
+                  "on-secondary": "#ffffff",
+                  "on-primary-fixed": "#2e0d34",
+                  "on-tertiary-container": "#b8a087",
+                  "on-tertiary-fixed": "#261908",
+                  "background": "#fff7fa",
+                  "tertiary-fixed-dim": "#dcc2a8",
+                  "on-secondary-fixed-variant": "#6f3253",
+                  "surface-dim": "#e0d8dc"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "unit": "8px",
+                  "container-max": "1440px",
+                  "glass-padding": "32px",
+                  "margin-desktop": "64px",
+                  "margin-mobile": "20px",
+                  "gutter": "24px"
+          },
+          "fontFamily": {
+                  "headline-lg-mobile": ["Manrope"],
+                  "headline-lg": ["Manrope"],
+                  "caption": ["Manrope"],
+                  "label-md": ["Manrope"],
+                  "headline-md": ["Manrope"],
+                  "display-lg": ["Manrope"],
+                  "body-md": ["Manrope"],
+                  "body-lg": ["Manrope"]
+          },
+          "fontSize": {
+                  "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                  "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                  "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                  "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                  "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                  "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                  "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                  "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #F8F4E9;
+      background-image: radial-gradient(circle at 15% 50%, rgba(253, 172, 211, 0.05), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(80, 45, 85, 0.03), transparent 25%);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 24px;
+    }
+    .glass-inner {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .btn-primary {
+      background-color: #502D55;
+      color: #ffffff;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-primary:hover {
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-on-surface overflow-x-hidden flex">
+<!-- Left Sidebar -->
+<aside class="hidden md:flex flex-col w-72 h-screen fixed left-0 top-0 z-40 bg-white/30 dark:bg-surface/10 backdrop-blur-3xl border-r border-white/50 shadow-2xl shadow-primary/10">
+<div class="p-glass-padding flex-grow flex flex-col">
+<!-- Brand -->
+<div class="mb-12">
+<h1 class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed">ProotyPie</h1>
+<p class="font-body-md text-secondary mt-2">AI Freshness Guard</p>
+</div>
+<!-- Fruit Spotlight Card -->
+<div class="glass-card p-4 mt-auto">
+<p class="font-label-md text-secondary mb-3 uppercase tracking-wider">Fruit Spotlight</p>
+<div class="aspect-square rounded-xl overflow-hidden mb-4 relative">
+<img class="object-cover w-full h-full absolute inset-0" data-alt="A macro photography shot of a perfectly ripe, glistening pomegranate cut in half, revealing bright ruby-red seeds catching the soft, diffused light. The background is a clean, minimal champagne-colored surface with a very subtle reflection. The lighting is high-end studio quality, creating a luxurious and appetizing mood in a light-mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmiajLo0yTk9T7JKoOTsWexyf3c9q853EYJodZgmoV_MSx4HWiMMXMwCIXHEfVDGEAe_2hdkoal_dmwzb8q_PQul0B0EX8McYMKqBJojeNbR8XHZPTGPW2359qFECmAGjiVf5YyRfaTK7UCOcTUjmQdUpKX1qTtoGwMHdwEu7CCqaGmT-DJNWOVh_e_fLKoOc71yk1hH9-IIL5tJ_Ium5oZ2DyVLYhczSaw2kJaqORAF5LWQ55RpgqYPwb7vNrcCP7eke99vNTYrkt"/>
+</div>
+<h3 class="font-headline-md text-primary mb-2">Pomegranate</h3>
+<p class="font-body-md text-on-surface-variant text-sm">Rich in antioxidants, pomegranates can last up to 2 months when stored properly in a cool, dry place.</p>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="w-full md:pl-72 flex flex-col min-h-screen">
+<!-- Top Bar -->
+<header class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-6 bg-transparent">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">nutrition</span>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">Check Before Consumption</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-secondary hover:text-primary transition-colors rounded-full hover:bg-white/20">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-secondary hover:text-primary transition-colors rounded-full hover:bg-white/20">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Workspace -->
+<div class="flex-grow px-margin-mobile md:px-margin-desktop pb-margin-desktop max-w-[1440px] mx-auto w-full">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter h-full">
+<!-- Left Column: Upload & Prediction -->
+<div class="lg:col-span-5 flex flex-col gap-gutter">
+<!-- Upload Card -->
+<div class="glass-card p-glass-padding flex flex-col items-center justify-center min-h-[300px] border-dashed border-2 border-primary/30 hover:border-primary/60 transition-colors cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">add_photo_alternate</span>
+</div>
+<h3 class="font-headline-md text-primary mb-2">Upload Image</h3>
+<p class="font-body-md text-on-surface-variant text-center">Drag and drop or click to browse<br/>Supported: JPG, PNG</p>
+</div>
+<!-- AI Prediction Card -->
+<div class="glass-card p-glass-padding">
+<div class="flex justify-between items-start mb-6">
+<div>
+<p class="font-label-md text-secondary uppercase tracking-wider mb-1">AI Prediction</p>
+<h3 class="font-display-lg text-headline-md text-primary">Honeycrisp Apple</h3>
+</div>
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-100/50 text-emerald-800 border border-emerald-200 font-label-md">
+<span class="material-symbols-outlined text-sm mr-1">check_circle</span> Fresh
+              </span>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between font-body-md mb-1">
+<span class="text-on-surface-variant">Confidence</span>
+<span class="font-semibold text-primary">98%</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 98%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-body-md mb-1">
+<span class="text-on-surface-variant">Surface Integrity</span>
+<span class="font-semibold text-primary">High</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Storage Recommendations -->
+<div class="lg:col-span-7">
+<div class="glass-card p-glass-padding h-full">
+<h3 class="font-headline-lg text-headline-lg text-primary mb-8">Storage Recommendations</h3>
+<div class="grid grid-cols-2 gap-4">
+<!-- Mini Cards -->
+<div class="glass-inner p-4 flex flex-col">
+<span class="material-symbols-outlined text-secondary mb-2">device_thermostat</span>
+<p class="font-body-md text-on-surface-variant mb-1">Temperature</p>
+<p class="font-headline-md text-primary">32°F - 36°F</p>
+</div>
+<div class="glass-inner p-4 flex flex-col">
+<span class="material-symbols-outlined text-secondary mb-2">water_drop</span>
+<p class="font-body-md text-on-surface-variant mb-1">Humidity</p>
+<p class="font-headline-md text-primary">90% - 95%</p>
+</div>
+<div class="glass-inner p-4 flex flex-col">
+<span class="material-symbols-outlined text-secondary mb-2">event_available</span>
+<p class="font-body-md text-on-surface-variant mb-1">Shelf Life</p>
+<p class="font-headline-md text-primary">3-4 Weeks</p>
+</div>
+<div class="glass-inner p-4 flex flex-col">
+<span class="material-symbols-outlined text-secondary mb-2">light_mode</span>
+<p class="font-body-md text-on-surface-variant mb-1">Light Exposure</p>
+<p class="font-headline-md text-primary">Dark / Low</p>
+</div>
+<div class="glass-inner p-4 flex flex-col">
+<span class="material-symbols-outlined text-secondary mb-2">co2</span>
+<p class="font-body-md text-on-surface-variant mb-1">Ethylene Prod.</p>
+<p class="font-headline-md text-primary">High</p>
+</div>
+<div class="glass-inner p-4 flex flex-col">
+<span class="material-symbols-outlined text-secondary mb-2">kitchen</span>
+<p class="font-body-md text-on-surface-variant mb-1">Ideal Location</p>
+<p class="font-headline-md text-primary">Crisper Drawer</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Chat Integration FAB -->
+<button class="fixed bottom-margin-mobile right-margin-mobile md:bottom-margin-desktop md:right-margin-desktop w-16 h-16 rounded-full btn-primary shadow-[0_8px_32px_rgba(80,45,85,0.3)] flex items-center justify-center z-50">
+<span class="material-symbols-outlined text-white text-2xl">chat_bubble</span>
+</button>
+</body></html>
